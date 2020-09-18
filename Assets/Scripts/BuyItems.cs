@@ -17,9 +17,9 @@ public class BuyItems : MonoBehaviour
     {
         
     }
-    public void BuyItem(Item item)
+    public void BuyItem()
     {
         
-        AddItem(new Item { itemType = Item.ItemType.SimpleLemon, cost = 1, quantity = 1 });
+       
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class ItemAssets : MonoBehaviour
 {
     public static ItemAssets instance;
-    // Start is called before the first frame update
+  
     void Awake()
     {
         instance = this;
@@ -16,10 +16,12 @@ public class ItemAssets : MonoBehaviour
     public Sprite waterSprite;
     public Sprite sodaSprite;
     public Sprite specialLemonSprite;
+    public Sprite superSugarSprite;
+    public Sprite simpleRecipeSprite;
+    public Sprite specialRecipeSprite;
+    public Sprite superSpecialRecipeSprite;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
+
+
 }

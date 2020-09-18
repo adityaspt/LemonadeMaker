@@ -27,7 +27,7 @@ public class InventoryUI : MonoBehaviour
         float itemSlotCellSize = 200f;
         foreach (Item item in inventory.getItemsList())
         {
-            print("Hello");
+            
             RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
             itemSlotRectTransform.gameObject.SetActive(true);
             itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, y * itemSlotCellSize);
