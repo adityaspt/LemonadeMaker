@@ -10,9 +10,9 @@ public class Inventory
     public Inventory()
     {
         itemList = new List<Item>();
-        AddItem(new Item { itemType = Item.ItemType.SimpleLemon, cost = 1, quantity = 1 });
-        AddItem(new Item { itemType = Item.ItemType.Water, cost = 2, quantity = 1 });
-        AddItem(new Item { itemType = Item.ItemType.Sugar, cost = 2, quantity = 20 });
+        //AddItem(new Item { itemType = Item.ItemType.SimpleLemon, cost = 1, quantity = 1 });
+        //AddItem(new Item { itemType = Item.ItemType.Water, cost = 2, quantity = 1 });
+        //AddItem(new Item { itemType = Item.ItemType.Sugar, cost = 2, quantity = 20 });
 
         
     }

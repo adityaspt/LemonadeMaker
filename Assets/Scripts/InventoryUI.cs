@@ -32,7 +32,7 @@ public class InventoryUI : MonoBehaviour
             itemSlotRectTransform.gameObject.SetActive(true);
             itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, y * itemSlotCellSize);
             Image image = itemSlotRectTransform.Find("Icon").GetComponent<Image>();
-            image.sprite = item.GetItemSprite();
+            //image.sprite = item.GetItemSprite();
             x++;
             if (x > 4)
             {
