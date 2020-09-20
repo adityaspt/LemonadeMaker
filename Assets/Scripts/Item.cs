@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Item
 {
-    
+
     public enum ItemType
     {
-        SimpleLemon,Water,Soda,SpecialLemon,Sugar,SuperSugar,SimpleRecipe,SpecialRecipe,SuperSpecialRecipe,
+        SimpleLemon, Water, Soda, SpecialLemon, Sugar, SuperSugar, SimpleRecipe, SpecialRecipe, SuperSpecialRecipe,
     }
     public static ItemType itemType;
     //public int cost;
@@ -18,7 +18,7 @@ public class Item
         {
             default:
             case ItemType.Sugar:
-              
+
                 return ItemAssets.instance.sugarSprite;
             case ItemType.SimpleLemon:
                 return ItemAssets.instance.simpleLemonSprite;
@@ -86,6 +86,30 @@ public class Item
                 return 1;
             case ItemType.SimpleRecipe:
                 return 1f;
+        }
+    }
+    public static bool IsStackable(ItemType itemType)
+    {
+        switch (itemType)
+        {
+            default:
+            case ItemType.Sugar:
+
+            case ItemType.SimpleLemon:
+
+            case ItemType.Soda:
+
+            case ItemType.Water:
+
+            case ItemType.SuperSugar:
+            case ItemType.SpecialLemon:
+                return true;
+            case ItemType.SuperSpecialRecipe:
+                
+            case ItemType.SpecialRecipe:
+                
+            case ItemType.SimpleRecipe:
+                return false;
         }
     }
 }

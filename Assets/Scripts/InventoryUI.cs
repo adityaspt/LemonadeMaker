@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -14,8 +15,15 @@ public class InventoryUI : MonoBehaviour
     public void SetInventory(Inventory inventory)
     {
         this.inventory = inventory;
+       // inventory.OnItemsListChanged += Inventory_OnItemsListChanged;
         RefreshInventoryItems();
     }
+
+    //private void Inventory_OnItemsListChanged(object sender, EventArgs e)
+    //{
+    //    RefreshInventoryItems();
+    //}
+
     public void Awake()
     {
         itemSlotContainer = transform.Find("Image/ItemsParent");
@@ -42,12 +50,29 @@ public class InventoryUI : MonoBehaviour
     //        }
     //    }
     //}
+
+    private void OnEnable()
+    {
+         RefreshInventoryItems();
+    }
+
     private void RefreshInventoryItems()
     {
+        foreach (Transform child in itemSlotContainer)
+        {
+            if (child == itemSlotTemplate)
+
+                continue;
+            Destroy(child.gameObject);
+
+        }
+
+
         int x = 0; int y = 0;
         float itemSlotCellSize = 200f;
-        foreach( KeyValuePair<Item.ItemType, int> item in inventory.getItemsList())
-      
+
+        foreach (KeyValuePair<Item.ItemType, int> item in inventory.getItemsList())
+
         {
 
             RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();

@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class Inventory
 {
-    public Dictionary<Item.ItemType, int> itemsTracker;
+    public static Dictionary<Item.ItemType, int> itemsTracker;
     //public List<Item> itemList;
-    public event EventHandler itemsBought;
+    public event EventHandler OnItemsListChanged;
     public Inventory()
     {
-      
 
-        itemsTracker = new Dictionary<Item.ItemType, int> ();
+
+        itemsTracker = new Dictionary<Item.ItemType, int>();
         //Starting items
+        AddItem(Item.ItemType.SimpleRecipe, 1);
         AddItem(Item.ItemType.SimpleLemon, 1);
         AddItem(Item.ItemType.Sugar, 1);
         AddItem(Item.ItemType.Water, 1);
@@ -24,18 +25,26 @@ public class Inventory
     //    itemList.Add(item);
     //    itemsBought?.Invoke(this, EventArgs.Empty);
     //}
-    public void AddItem(Item.ItemType itemType,int number)
+    public void AddItem(Item.ItemType itemType, int number)
     {
-
-        itemsTracker.Add(itemType,number);
-       // itemsBought?.Invoke(this, EventArgs.Empty);
+        if (itemsTracker.ContainsKey(itemType))
+        {
+            if (Item.IsStackable(itemType))
+            {
+                itemsTracker[itemType] = itemsTracker[itemType] + 1;
+            }
+        }
+        else
+            itemsTracker.Add(itemType, number);
+        OnItemsListChanged?.Invoke(this, EventArgs.Empty);
+        // itemsBought?.Invoke(this, EventArgs.Empty);
     }
 
     //public List<Item> getItemsList()
     //{
     //    return itemList;
     //}
-    public Dictionary<Item.ItemType,int> getItemsList()
+    public Dictionary<Item.ItemType, int> getItemsList()
     {
         return itemsTracker;
     }

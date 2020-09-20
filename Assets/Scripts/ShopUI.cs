@@ -14,7 +14,8 @@ public class ShopUI : MonoBehaviour
 
     [SerializeField]
     Transform cantBuyPanel;
-
+    [SerializeField]
+    Sprite checkMarkSprite;
     private void Awake()
     {
         container = transform.Find("Scroll View/Viewport/Content");
@@ -64,6 +65,13 @@ public class ShopUI : MonoBehaviour
         float shopItemHeight = 300f;
         //shopItemRectTransform.anchoredPosition = new Vector2(0, shopItemHeight * positionIndex);
         shopItemRectTransform.anchoredPosition = new Vector2(0, (-shopItemHeight * positionIndex));
+        if (itemType == Item.ItemType.SimpleRecipe)
+        {
+            shopItemTransform.Find("Button").GetComponent<Image>().sprite = checkMarkSprite;
+           
+        }
+        
+        else
         shopItemTransform.Find("Button").GetComponent<Image>().sprite = itemSprite;
         if (itemSprite.name == "bottle")
         {
@@ -80,22 +88,53 @@ public class ShopUI : MonoBehaviour
 
     private void TryBuyItem(Item.ItemType itemType)
     {
+        if (itemType == Item.ItemType.SimpleRecipe || itemType == Item.ItemType.SpecialRecipe || itemType == Item.ItemType.SuperSpecialRecipe) //Check for recipes
+        {
+            if (Inventory.itemsTracker.ContainsKey(itemType))//already bought recipe
+            {
+                ShowCantBuyItem(1);
+            }
+            else //buy new recipe
+            {
+                CheckAndBuyItem(itemType);
+
+            }
+
+
+        }
+        else //check for other items
+        {
+
+            CheckAndBuyItem(itemType);
+        }
+    }
+   
+    public void CheckAndBuyItem(Item.ItemType itemType)
+    {
         if (PlayerPrefs.GetFloat(PlayerPrefsManager.currentMoney) >= Item.GetItemCost(itemType))
         {
-          DeductCostOfItem(Item.GetItemCost(itemType));
-            print("Item bought");
+            DeductCostOfItem(Item.GetItemCost(itemType));
+            Inventory.itemsTracker.Add(itemType, 1);
         }
         else
         {
             //GameManager.gameManagerInstance.CantBuyItemEvent?.Invoke(this, EventArgs.Empty);
-            ShowCantBuyItem();
-            print("cant buy");
+            ShowCantBuyItem(0);
+           
         }
     }
-   
-    public void ShowCantBuyItem()
+
+
+    public void ShowCantBuyItem(int a)
     {
+        
         cantBuyPanel.gameObject.SetActive(true);
+       if(a==0)
+            cantBuyPanel.GetComponent<Transform>().Find("Image/CantBuyText").GetComponent<TextMeshProUGUI>().text = "You have no money to buy this !";
+        else
+        {
+            cantBuyPanel.GetComponent<Transform>().Find("Image/CantBuyText").GetComponent<TextMeshProUGUI>().text = "Already bought this!";
+        }
     }
    
     public void DeductCostOfItem(float cost)
