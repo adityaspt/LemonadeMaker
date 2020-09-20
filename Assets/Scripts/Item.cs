@@ -10,8 +10,8 @@ public class Item
         SimpleLemon,Water,Soda,SpecialLemon,Sugar,SuperSugar,SimpleRecipe,SpecialRecipe,SuperSpecialRecipe,
     }
     public static ItemType itemType;
-    public int cost;
-    public float quantity;
+    //public int cost;
+    //public float quantity;
     public static Sprite GetItemSprite(ItemType itemType)
     {
         switch (itemType)
@@ -21,8 +21,6 @@ public class Item
               
                 return ItemAssets.instance.sugarSprite;
             case ItemType.SimpleLemon:
-             
-
                 return ItemAssets.instance.simpleLemonSprite;
             case ItemType.Soda:
                 return ItemAssets.instance.sodaSprite;

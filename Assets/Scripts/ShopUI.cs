@@ -12,14 +12,16 @@ public class ShopUI : MonoBehaviour
     [SerializeField]
     Transform shopItemTemplate;
 
+    [SerializeField]
+    Transform cantBuyPanel;
+
     private void Awake()
     {
         container = transform.Find("Scroll View/Viewport/Content");
         if (gameObject.name == "Items")
         {
             shopItemTemplate = transform.Find("Scroll View/Viewport/Content/ItemsBuy");
-            if (shopItemTemplate != null)
-            print("Found");
+
         }
         else if (gameObject.name == "Recipies")
         {
@@ -27,6 +29,10 @@ public class ShopUI : MonoBehaviour
 
         }
         shopItemTemplate.gameObject.SetActive(false);
+
+        cantBuyPanel.gameObject.SetActive(false);
+
+      
     }
 
     // Start is called before the first frame update
@@ -34,7 +40,7 @@ public class ShopUI : MonoBehaviour
     {
         if (gameObject.name == "Items")
         {
-            CreateItemButton(Item.ItemType.SimpleLemon,Item.GetItemSprite(Item.ItemType.SimpleLemon), "Lemon", Item.GetItemCost(Item.ItemType.SimpleLemon), Item.GetItemQuantity(Item.ItemType.SimpleLemon), 0);
+            CreateItemButton(Item.ItemType.SimpleLemon, Item.GetItemSprite(Item.ItemType.SimpleLemon), "Lemon", Item.GetItemCost(Item.ItemType.SimpleLemon), Item.GetItemQuantity(Item.ItemType.SimpleLemon), 0);
             CreateItemButton(Item.ItemType.Sugar, Item.GetItemSprite(Item.ItemType.Sugar), "Sugar", Item.GetItemCost(Item.ItemType.Sugar), Item.GetItemQuantity(Item.ItemType.Sugar), 1);
             CreateItemButton(Item.ItemType.Water, Item.GetItemSprite(Item.ItemType.Water), "Water", Item.GetItemCost(Item.ItemType.Water), Item.GetItemQuantity(Item.ItemType.Water), 2);
             CreateItemButton(Item.ItemType.Soda, Item.GetItemSprite(Item.ItemType.Soda), "Soda", Item.GetItemCost(Item.ItemType.Soda), Item.GetItemQuantity(Item.ItemType.Soda), 3);
@@ -47,10 +53,11 @@ public class ShopUI : MonoBehaviour
             CreateItemButton(Item.ItemType.SpecialRecipe, Item.GetItemSprite(Item.ItemType.SpecialRecipe), "SpecialRecipe", Item.GetItemCost(Item.ItemType.SpecialRecipe), Item.GetItemQuantity(Item.ItemType.SpecialRecipe), 1);
             CreateItemButton(Item.ItemType.SuperSpecialRecipe, Item.GetItemSprite(Item.ItemType.SuperSpecialRecipe), "SuperSpecialRecipe", Item.GetItemCost(Item.ItemType.SuperSpecialRecipe), Item.GetItemQuantity(Item.ItemType.SuperSpecialRecipe), 2);
         }
+       
     }
 
-    
-    void CreateItemButton(Item.ItemType itemType,Sprite itemSprite,string itemName,float itemCost,float itemQuantity,int positionIndex)
+
+    void CreateItemButton(Item.ItemType itemType, Sprite itemSprite, string itemName, float itemCost, float itemQuantity, int positionIndex)
     {
         Transform shopItemTransform = Instantiate(shopItemTemplate, container);
         RectTransform shopItemRectTransform = shopItemTransform.GetComponent<RectTransform>();
@@ -73,6 +80,29 @@ public class ShopUI : MonoBehaviour
 
     private void TryBuyItem(Item.ItemType itemType)
     {
-        print(Item.GetItemQuantity(itemType));
+        if (PlayerPrefs.GetFloat(PlayerPrefsManager.currentMoney) >= Item.GetItemCost(itemType))
+        {
+          DeductCostOfItem(Item.GetItemCost(itemType));
+            print("Item bought");
+        }
+        else
+        {
+            //GameManager.gameManagerInstance.CantBuyItemEvent?.Invoke(this, EventArgs.Empty);
+            ShowCantBuyItem();
+            print("cant buy");
+        }
     }
+   
+    public void ShowCantBuyItem()
+    {
+        cantBuyPanel.gameObject.SetActive(true);
+    }
+   
+    public void DeductCostOfItem(float cost)
+    {
+        
+        PlayerPrefs.SetFloat(PlayerPrefsManager.currentMoney, PlayerPrefs.GetFloat(PlayerPrefsManager.currentMoney) - cost);
+
+    }
+
 }
