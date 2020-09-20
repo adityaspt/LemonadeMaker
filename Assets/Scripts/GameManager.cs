@@ -15,8 +15,8 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt(PlayerPrefsManager.currentMoney, 5);
         }
 
-        inventory = new Inventory();
-        inventoryUI.SetInventory(inventory);
+        //inventory = new Inventory();
+       // inventoryUI.SetInventory(inventory);
     }
    
     // Update is called once per frame

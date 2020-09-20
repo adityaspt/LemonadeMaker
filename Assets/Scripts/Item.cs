@@ -18,8 +18,11 @@ public class Item
         {
             default:
             case ItemType.Sugar:
+              
                 return ItemAssets.instance.sugarSprite;
             case ItemType.SimpleLemon:
+             
+
                 return ItemAssets.instance.simpleLemonSprite;
             case ItemType.Soda:
                 return ItemAssets.instance.sodaSprite;
@@ -68,7 +71,7 @@ public class Item
         {
             default:
             case ItemType.Sugar:
-                return 20;
+                return 1;
             case ItemType.SimpleLemon:
                 return 1f;
             case ItemType.Soda:
@@ -76,7 +79,7 @@ public class Item
             case ItemType.Water:
                 return 1f;
             case ItemType.SuperSugar:
-                return 20f;
+                return 1;
             case ItemType.SpecialLemon:
                 return 1f;
             case ItemType.SuperSpecialRecipe:
