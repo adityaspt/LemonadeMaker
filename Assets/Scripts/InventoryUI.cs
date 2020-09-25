@@ -15,8 +15,9 @@ public class InventoryUI : MonoBehaviour
     public void SetInventory(Inventory inventory)
     {
         this.inventory = inventory;
-       // inventory.OnItemsListChanged += Inventory_OnItemsListChanged;
-        RefreshInventoryItems();
+        // inventory.OnItemsListChanged += Inventory_OnItemsListChanged;
+
+       // RefreshInventoryItems();
     }
 
     //private void Inventory_OnItemsListChanged(object sender, EventArgs e)
@@ -26,9 +27,17 @@ public class InventoryUI : MonoBehaviour
 
     public void Awake()
     {
-        itemSlotContainer = transform.Find("Image/ItemsParent");
-        itemSlotTemplate = itemSlotContainer.Find("InventorySlot");
+        if (gameObject.name == "InventoryPanel")
+        {
+            itemSlotContainer = transform.Find("Image/ItemsParent");
 
+        }
+        else
+        {
+            itemSlotContainer = transform.Find("Image/Panel/Scroll View/Viewport/Content");
+        }
+        itemSlotTemplate = itemSlotContainer.Find("InventorySlot");
+        itemSlotTemplate.gameObject.SetActive(false);
     }
     //private void RefreshInventoryItems()
     //{
@@ -53,7 +62,7 @@ public class InventoryUI : MonoBehaviour
 
     private void OnEnable()
     {
-         RefreshInventoryItems();
+        RefreshInventoryItems();
     }
 
     private void RefreshInventoryItems()
@@ -71,22 +80,24 @@ public class InventoryUI : MonoBehaviour
         int x = 0; int y = 0;
         float itemSlotCellSize = 200f;
 
+        
+
         foreach (KeyValuePair<Item.ItemType, int> item in inventory.getItemsList())
-
         {
-
             RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
+           
             itemSlotRectTransform.gameObject.SetActive(true);
-            itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, y * itemSlotCellSize);
+            itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, -y * itemSlotCellSize);
             Image image = itemSlotRectTransform.Find("Icon").GetComponent<Image>();
             itemSlotRectTransform.Find("Number").GetComponent<TextMeshProUGUI>().text = item.Value.ToString();
             image.sprite = Item.GetItemSprite(item.Key);
             x++;
-            if (x > 4)
+            if (x > 2)
             {
                 x = 0;
                 y++;
             }
         }
+
     }
 }

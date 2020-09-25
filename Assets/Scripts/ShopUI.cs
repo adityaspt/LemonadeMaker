@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
+using UnityEngine.EventSystems;
 
 public class ShopUI : MonoBehaviour
 {
@@ -73,16 +74,13 @@ public class ShopUI : MonoBehaviour
         
         else
         shopItemTransform.Find("Button").GetComponent<Image>().sprite = itemSprite;
-        if (itemSprite.name == "bottle")
-        {
-            shopItemTransform.Find("Button").GetComponent<Image>().color = Color.blue;
-        }
+       
         shopItemTransform.Find("Button/Name").GetComponent<TextMeshProUGUI>().SetText(itemName);
         shopItemTransform.Find("Button/Quantity").GetComponent<TextMeshProUGUI>().SetText(itemQuantity.ToString());
         shopItemTransform.Find("Button/Cost").GetComponent<TextMeshProUGUI>().SetText(itemCost.ToString());
         shopItemTransform.gameObject.SetActive(true);
         shopItemTransform.Find("Button").GetComponent<Button>().onClick.AddListener(delegate { TryBuyItem(itemType); });
-
+       
 
     }
 
@@ -90,6 +88,7 @@ public class ShopUI : MonoBehaviour
     {
         if (itemType == Item.ItemType.SimpleRecipe || itemType == Item.ItemType.SpecialRecipe || itemType == Item.ItemType.SuperSpecialRecipe) //Check for recipes
         {
+            var go = EventSystem.current.currentSelectedGameObject;
             if (Inventory.itemsTracker.ContainsKey(itemType))//already bought recipe
             {
                 ShowCantBuyItem(1);
@@ -97,6 +96,8 @@ public class ShopUI : MonoBehaviour
             else //buy new recipe
             {
                 CheckAndBuyItem(itemType);
+                go.GetComponent<Image>().sprite = checkMarkSprite;
+
 
             }
 
@@ -114,7 +115,7 @@ public class ShopUI : MonoBehaviour
         if (PlayerPrefs.GetFloat(PlayerPrefsManager.currentMoney) >= Item.GetItemCost(itemType))
         {
             DeductCostOfItem(Item.GetItemCost(itemType));
-            Inventory.itemsTracker.Add(itemType, 1);
+            Inventory.AddItem(itemType, 1);
         }
         else
         {
@@ -125,7 +126,7 @@ public class ShopUI : MonoBehaviour
     }
 
 
-    public void ShowCantBuyItem(int a)
+    public void ShowCantBuyItem(int a) //0 for no money and 1 for already bought
     {
         
         cantBuyPanel.gameObject.SetActive(true);

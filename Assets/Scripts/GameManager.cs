@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI MoneyIndicatorText;
 
+    [SerializeField]
+    float StartingMoney;
+
    
    
     // Start is called before the first frame update
@@ -22,7 +25,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.DeleteAll();
         if (!PlayerPrefs.HasKey(PlayerPrefsManager.currentMoney))
         {
-            PlayerPrefs.SetFloat(PlayerPrefsManager.currentMoney, 5);
+            PlayerPrefs.SetFloat(PlayerPrefsManager.currentMoney, StartingMoney);
         }
       
         inventory = new Inventory();

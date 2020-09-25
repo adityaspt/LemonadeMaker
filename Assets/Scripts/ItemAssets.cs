@@ -9,6 +9,16 @@ public class ItemAssets : MonoBehaviour
     void Awake()
     {
         instance = this;
+
+        //simpleLemonSprite  = Resources.Load<Sprite>("Items/lemon");
+        //sugarSprite = Resources.Load<Sprite>("Items/sugar");
+        //waterSprite = Resources.Load<Sprite>("Items/bottle");
+        //sodaSprite = Resources.Load<Sprite>("Items/soda");
+        //specialLemonSprite = Resources.Load<Sprite>("Items/specialLemon");
+        //superSugarSprite = Resources.Load<Sprite>("Items/superSugar");
+        //simpleRecipeSprite = Resources.Load<Sprite>("Items/simpleLemonade");
+        //specialRecipeSprite = Resources.Load<Sprite>("Items/SpecialLemonade");
+        //superSpecialRecipeSprite = Resources.Load<Sprite>("Items/SuperSpecialRecipe");
     }
 
     public Sprite simpleLemonSprite;

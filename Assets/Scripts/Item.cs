@@ -44,17 +44,17 @@ public class Item
         {
             default:
             case ItemType.Sugar:
-                return 2f;
+                return 1f;
             case ItemType.SimpleLemon:
                 return 0.5f;
             case ItemType.Soda:
-                return 5f;
+                return 1.5f;
             case ItemType.Water:
-                return 2f;
+                return 1f;
             case ItemType.SuperSugar:
-                return 8f;
+                return 3f;
             case ItemType.SpecialLemon:
-                return 6f;
+                return 1.5f;
             case ItemType.SuperSpecialRecipe:
                 return 15;
             case ItemType.SpecialRecipe:
@@ -112,4 +112,19 @@ public class Item
                 return false;
         }
     }
+    public static float ItemSellingPrice(ItemType itemType) {
+        switch (itemType)
+        {
+            default:
+            
+           
+            case ItemType.SuperSpecialRecipe:
+                return 12f;
+            case ItemType.SpecialRecipe:
+                return 8f;
+            case ItemType.SimpleRecipe:
+                return 4f;
+        }
+    }
+
 }

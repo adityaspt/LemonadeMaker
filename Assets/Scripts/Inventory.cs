@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class Inventory
 {
+
     public static Dictionary<Item.ItemType, int> itemsTracker;
     //public List<Item> itemList;
-    public event EventHandler OnItemsListChanged;
+   // public static event EventHandler OnItemsListChanged;
     public Inventory()
     {
 
@@ -25,7 +26,7 @@ public class Inventory
     //    itemList.Add(item);
     //    itemsBought?.Invoke(this, EventArgs.Empty);
     //}
-    public void AddItem(Item.ItemType itemType, int number)
+    public static void AddItem(Item.ItemType itemType, int number)
     {
         if (itemsTracker.ContainsKey(itemType))
         {
@@ -36,7 +37,7 @@ public class Inventory
         }
         else
             itemsTracker.Add(itemType, number);
-        OnItemsListChanged?.Invoke(this, EventArgs.Empty);
+       // OnItemsListChanged?.Invoke(this, EventArgs.Empty);
         // itemsBought?.Invoke(this, EventArgs.Empty);
     }
 
